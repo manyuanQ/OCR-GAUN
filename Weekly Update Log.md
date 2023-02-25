@@ -22,3 +22,11 @@
 - Please let me know if you think the level of correctness is acceptable, as this may affect similar scanned files. For example, last time it could not recognize dates correctly.
 - Additionally, do you know the proportion of scanned and non-scanned files? This information will help me understand how many files require attention in order to improve accuracy.
 - My suggested solution is to prioritize processing non-scanned (>1990) files first, and then focus on improving accuracy of scanned files. 
+
+## Week of 02/22-26
+
+### Completed tasks:
+
+- Write a function to extract information from column A to J and M, K L can be obtained outside the function, N cannot be recognized by text whether this file is scanned or not. However each file has a slightly difference between each other, there are many bugs in this function, need to be improved by testing with different files.
+
+
