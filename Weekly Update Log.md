@@ -27,6 +27,6 @@
 
 ### Completed tasks:
 
-- Write a function to extract information from column A to J and M, K L can be obtained outside the function, N cannot be recognized by text whether this file is scanned or not.
+- Write a function to extract information from column A to J and M, K L can be obtained outside the function, N cannot be recognized by text whether this file is scanned or not. However each file has a slightly difference between each other, there are many bugs in this function, need to be improved by testing with different files.
 
 
