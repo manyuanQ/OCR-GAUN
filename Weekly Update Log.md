@@ -35,4 +35,16 @@
 - I will seek the agreement of Prof. Yang to begin extracting new version files.
 - I plan to consider specific preprocessing for old version files in the upcoming week.
 
+## Week of 02/27-03/02:
+
+### Completed tasks:
+
+- Divided the extract function into smaller parts to handle each column efficiently.
+- Optimized helper functions and regular expressions to improve the accuracy and speed of the extraction process.
+- Conducted testing with five different PDF file formats.
+
+### Questions and Plans:
+
+- I have observed some differences in the file formats for each year, such as variations in the body text, footnotes, and council sections. Thus, I plan to adjust the extract functions by year to ensure greater accuracy.
+- There is one bug remaining in the body text of the 1994 file, which I will fix in the next update. Error case: both country and body text are countries' names.
 
