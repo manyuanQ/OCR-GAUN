@@ -89,10 +89,11 @@ footnote_pattern2 = r'^([A-Z]* ?)*$'
 def helper_extractCountries(text):
     footnote = ''
     countries = ''
-
+    # only one paragraph left -> country only, no footnote
     if len(text) == 1:
         countries = text[0]
-
+        return countries, footnote
+    
     for part in text:
         #print(part)
         part = part.replace('\n', ' ')
