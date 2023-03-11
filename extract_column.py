@@ -85,7 +85,7 @@ def extract_session(text):
 
 
 country_pattern = r'^([A-Za-z]+$)|([A-Za-z]+, )*[A-Za-z]+( |_)and [A-Za-z]+' # ^([A-Za-z]+$)|[A-Za-z]+, *[A-Za-z]+'
-footnote_pattern2 = r'^([A-Z]* ?)*$'
+footnote_pattern2 = r'^([A-Z]+ ?)*$'
 def helper_extractCountries(text):
     footnote = ''
     countries = ''
@@ -238,3 +238,41 @@ def extract_body(text):
     #print(footnote)
     footnote = ' '.join(footnote)
     return body_text, footnote
+
+# Function to classify text into column A to N
+def classify_text_to_column(text):
+    result = []
+    #print(text)
+
+    # Split based on : draft, which is the end of countries
+    part1_text, part2_text = split_text(text)
+    
+    # Get year(A) and date(J)
+    #print('A,J')
+    year, date = extract_date(part1_text)
+    
+    # Get council/committe name (B)
+    #print('B')
+    council = extract_council(part1_text)
+
+    # Get session (C)
+    #print('C')
+    session = extract_session(part1_text)
+
+    # Get agenda item (D), agend detail (E), and countries (F)
+    #print('D, E, F')
+    agenda_item, agenda_detail, countries, footnote1 = extract_agenda_countries(text)
+
+    # Get title number (G) and title body (H)
+    #print('G, H')
+    title_number, title_text, body = extract_body_title(part2_text)
+
+    # Get Body text (I) and footnote(M)
+    #print('I, M')
+    body_text, footnote2 = extract_body(body)
+    footnote = footnote1 + footnote2
+    
+    # Add into result list
+    result = [year, council, session, agenda_item, agenda_detail, countries, title_number, title_text, body_text, date, footnote]
+    
+    return result
