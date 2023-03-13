@@ -117,7 +117,7 @@ def helper_extractCountries(text):
 
 agenda_pattern = r'Agenda item (\d+)(?: \((\w+)\))?(?:\n\n)?' # match single agenda item
 agendas_pattern = r'Agenda items (\d+ \(\w+\)? and \d+)'  # match agenda items
-sp_agenda_pattern = r'Item (\d+) of the provisional agenda'
+sp_agenda_pattern = r'Item (\d+ ?)(?: \((\w+)\) ?)?of the provisional agenda'
 draft_pattern = r':? *([\w ]*|[\n]*)? ?draft' #': *([\w ]*)?draft'
 
 # Extract Agenda item (D), Agenda detail (E), and countries (F)
@@ -127,6 +127,7 @@ def extract_agenda_countries(text):
     match2 = re.search(agendas_pattern, text)
     match3 = re.search(sp_agenda_pattern, text)
     start_index = 0
+    #print(text)
     if match1:           # handle single agenda item
         #print("single agenda")
         agenda_item_number = match1.group(1)
@@ -142,7 +143,12 @@ def extract_agenda_countries(text):
         agenda_item = match2.group(1)
         start_index = match2.end()
     elif match3 :  # handle special case:
-        agenda_item = match3.group(1)
+        agenda_item_number = match3.group(1)
+        agenda_item_letter = match3.group(2)
+        if agenda_item_letter is not None:
+            agenda_item = f"{agenda_item_number} ({agenda_item_letter})"
+        else:
+            agenda_item = agenda_item_number
         start_index = match3.end()
     else:              
         print("Agenda not found")
@@ -155,14 +161,19 @@ def extract_agenda_countries(text):
             #print(content)
             parts = content.split("\n\n")
             parts = [s for s in parts if s != '']
+            if len(parts) == 1:
+                parts = content.split("\n")
+            parts = [s for s in parts if s != '']
             #print(parts)
             agenda_detail = parts[0]
+            remain_parts = parts[1:]
             for i in range(1, len(parts)):
                 if parts[i].isupper():
                     agenda_detail += parts[i]
                 else:
                     remain_parts = parts[i:]
                     break
+            #print(remain_parts)
             countries, footnote = helper_extractCountries(remain_parts)
         else:
             print('Agenda match3 error')
@@ -233,7 +244,7 @@ def extract_body(text):
         #for line in paragraph.split('\n'):
             # exclude lines containing specific patterns
         paragraph = paragraph.replace("\n", " ")
-        #print(paragraph)
+        # print(paragraph)
         match = re.search(footnote_pattern, paragraph)
         if match:
             if match.group(0)[0] == '*':
@@ -247,9 +258,10 @@ def extract_body(text):
             # else:
             if len(paragraph) == 0:
                 continue
-            if (paragraph[0] == str(footnote_idx) and paragraph[1] == '/') or paragraph[0] == "*":
-                footnote_idx += 1
-                footnote.append(paragraph) 
+            elif len(paragraph) >= 2:
+                if (paragraph[0] == str(footnote_idx) and paragraph[1] == '/') or paragraph[0] == "*":
+                    footnote_idx += 1
+                    footnote.append(paragraph) 
             if not re.search(r'(\d{2}-\d{5}|[A-Za-z]/\d{2}/[A-Za-z]\.\d|[A-Za-z ]+Please recycle|Page \d{1})', paragraph):
                 body_text += paragraph.strip() + ' '
     #print(footnote)
