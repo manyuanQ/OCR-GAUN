@@ -84,8 +84,10 @@ def extract_session(text):
     return remove_empty(session)
 
 
-country_pattern = r'^([A-Za-z]+$)|([A-Za-z]+, )*[A-Za-z]+( |_)and [A-Za-z]+' # ^([A-Za-z]+$)|[A-Za-z]+, *[A-Za-z]+'
-footnote_pattern2 = r'^([A-Z]+ ?)*$'
+country_pattern1 = r'^[A-Za-z]+ ?$'
+country_pattern2 = r'^([A-Za-z]+, )*[A-Za-z]+ and [A-Za-z]+ ?$'
+#r'^([A-Za-z]+$)|([A-Za-z]+, )*[A-Za-z]+( |_)and [A-Za-z]+' # ^([A-Za-z]+$)|[A-Za-z]+, *[A-Za-z]+'
+#footnote_pattern2 = r'^([A-Z]+ ?)*$'
 def helper_extractCountries(text):
     footnote = ''
     countries = ''
@@ -94,17 +96,22 @@ def helper_extractCountries(text):
         countries = text[0]
         return countries, footnote
     
-    for part in text:
+    for i in range(len(text)):
         #print(part)
-        part = part.replace('\n', ' ')
-        match = re.search(footnote_pattern2, part)
-        if match:
+        part = text[i].replace('\n', ' ')
+        match1 = re.search(country_pattern1, part)
+        temp = part.split(',')
+        #match2 = re.search(country_pattern2, part)
+        if part.isupper(): # older files, footnote is all uppercase, not working for new files
             footnote += part
+        elif match1:
+            countries += ' '.join(text[i:])
+            break
+        elif len(temp) >= 3:
+            countries += ' '.join(text[i:])
+            break
         else:
-            if part[-2] == ':':
-                countries += part[:-2]
-            else:
-                countries += part
+            footnote += part
     return countries, footnote
 
 
@@ -145,8 +152,13 @@ def extract_agenda_countries(text):
             parts = [s for s in parts if s != '']
             #print(parts)
             agenda_detail = parts[0]
-            countries, footnote = helper_extractCountries(parts[1:])
-            #print(footnote, countries)
+            for i in range(1, len(parts)):
+                if parts[i].isupper():
+                    agenda_detail += parts[i]
+                else:
+                    remain_parts = parts[i:]
+                    break
+            countries, footnote = helper_extractCountries(remain_parts)
         else:
             print('Agenda match3 error')
     
