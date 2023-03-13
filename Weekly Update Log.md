@@ -1,5 +1,18 @@
 # Weekly Update Log
 
+## Week of 03/12-
+
+### Completed tasks:
+
+- Extraction for files from 1994 to 1997 formats are done correctly.
+
+### Questions and Plans:
+
+- Starting from the middle of 1998, the format underwent significant changes, including changes in font size, position, and capitalization.
+  - The date cannot be extracted during the OCR process.
+  - Agenda details are no longer entirely in uppercase, making it difficult to separate them with footnotes.
+  - The font size for all content is now smaller than before.
+
 ## Week of 03/07-03/11:
 
 ### Completed tasks:
