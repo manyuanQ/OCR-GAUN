@@ -117,6 +117,7 @@ def helper_extractCountries(text):
 
 agenda_pattern = r'Agenda item (\d+)(?: \((\w+)\))?(?:\n\n)?' # match single agenda item
 agendas_pattern = r'Agenda items (\d+ \(\w+\)? and \d+)'  # match agenda items
+sp_agenda_pattern = r'Item (\d+) of the provisional agenda'
 draft_pattern = r':? *([\w ]*|[\n]*)? ?draft' #': *([\w ]*)?draft'
 
 # Extract Agenda item (D), Agenda detail (E), and countries (F)
@@ -124,6 +125,7 @@ def extract_agenda_countries(text):
     # match agenda item
     match1 = re.search(agenda_pattern, text)
     match2 = re.search(agendas_pattern, text)
+    match3 = re.search(sp_agenda_pattern, text)
     start_index = 0
     if match1:           # handle single agenda item
         #print("single agenda")
@@ -139,6 +141,9 @@ def extract_agenda_countries(text):
         #print("multiple agenda")
         agenda_item = match2.group(1)
         start_index = match2.end()
+    elif match3 :  # handle special case:
+        agenda_item = match3.group(1)
+        start_index = match3.end()
     else:              
         print("Agenda not found")
     
