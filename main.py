@@ -2,6 +2,7 @@
 import os
 import pandas as pd
 import extract_column as ec
+import collections
 
 # Path to the folder containing the PDF files
 pdf_folder = './Dataset'
@@ -11,9 +12,13 @@ csv_folder = './csv_folder'
 column_list = ['year', 'Council', 'Session', 'Agenda item', 'Agenda detail', 'cosponsored countries', 
                'body title number',	'body title detail', 'body text', 'date', 'file', 'filecountry', 'footnote', 'scanned']
 
-
+# record countries
+visited_countries = ['Afghanistan', 'Albania', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Barbados', 'Benin', 'Bhutan']
 # Loop through each folder and PDF file and extract text
 for country_folder in os.listdir(pdf_folder):
+    # check if the country is unvisited
+    if country_folder in visited_countries:
+        continue
     print('---------------' + country_folder + '---------------' )
     if not os.path.isdir(os.path.join(pdf_folder, country_folder)):
         continue
@@ -28,11 +33,20 @@ for country_folder in os.listdir(pdf_folder):
             continue
         # check if this file is old-version
         year = int(pdf_file.split('_')[0])
-        if year < 1995:
+
+        #nfile = int(pdf_file[5:-4])
+        if year < 1994 or year > 1998:
             continue
+
+        if year == 1998:
+            df = pd.DataFrame(rows, columns = column_list)
+            csv_path = os.path.join(csv_folder, f"{country_folder}_1994-{year-1}.csv")
+            df.to_csv(csv_path, index = False) 
+            break
 
         pdf_path = os.path.join(pdf_folder, country_folder, pdf_file).replace('\\', '/')
         print(pdf_path)
+
         # try:
         pdf_text = ec.extract_text_from_pdf(pdf_path)
         text_columns = ec.classify_text_to_column(pdf_text)
@@ -50,20 +64,12 @@ for country_folder in os.listdir(pdf_folder):
         row.append(scanned)
 
         rows.append(row)
-        # count += 1
-        # if count == 5:
-        #     break
-        #print(rows)
-        if year == 1996:
-            df = pd.DataFrame(rows[:-1], columns = column_list)
-            csv_path = os.path.join(csv_folder, f"{country_folder}_{year-1}.csv")
-            df.to_csv(csv_path, index = False) 
-            break
         # except:
         #     print(f"Error extracting text from {pdf_path}")
         #     continue
-    break
     # Write the rows to the CSV file
-    df = pd.DataFrame(rows, columns = column_list)
-    df.to_csv(csv_path, index = False)  
+    # df = pd.DataFrame(rows, columns = column_list)
+    # df.to_csv(csv_path, index = False)  
+    visited_countries.append(country_folder)
+    print('---------------' + country_folder + '---------------' )
 
