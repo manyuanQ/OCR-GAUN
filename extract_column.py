@@ -15,7 +15,7 @@ def extract_text_from_pdf(pdf_path):
     # Loop through each page of the PDF and extract text using Tesseract
     for image in images:
         #print('image')
-        raw_text = pytesseract.image_to_string(image)
+        raw_text = pytesseract.image_to_string(image, lang='eng')
         text_list.append(raw_text)
     # Combine text from all pages into a single string
     org_text = '\n'.join(text_list)
@@ -152,7 +152,11 @@ def extract_agenda_countries(text):
         start_index = match3.end()
     else:              
         print("Agenda not found")
+        agenda_item = 'N/A'
     
+    countries = 'N/A'
+    footnote = 'N/A'
+    agenda_detail = 'N/A'
     if start_index != 0:
         match3 = re.search(draft_pattern, text[start_index:], re.DOTALL)
         if match3:
@@ -177,6 +181,9 @@ def extract_agenda_countries(text):
             countries, footnote = helper_extractCountries(remain_parts)
         else:
             print('Agenda match3 error')
+            countries = 'N/A'
+            footnote = 'N/A'
+            agenda_detail = 'N/A'
     
     return agenda_item, remove_empty(agenda_detail), remove_empty(countries), footnote
 
