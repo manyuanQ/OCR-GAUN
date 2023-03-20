@@ -4,6 +4,7 @@
 
 ### Completed tasks:
 
+- Uploaded rest of the files to the csv folders
 - Conducted a simple analysis about the invalid rate of files from 1994 to 1997. The average rate is 2.73%. Only 10 of 80 countries's rates are above 5%.
 
 ## Week of 03/12-03/19
