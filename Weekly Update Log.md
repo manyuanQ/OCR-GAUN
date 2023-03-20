@@ -1,10 +1,10 @@
 # Weekly Update Log
 
-## Week of 03/12-
+## Week of 03/12-03/19
 
 ### Completed tasks:
 
-- Extraction for files from 1994 to 1997 formats are done correctly.
+- All countries 1994-1997 files are extracted and uploaded to csv folder
 
 ### Questions and Plans:
 
