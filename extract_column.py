@@ -307,6 +307,11 @@ def classify_text_to_column(text):
     #print('I, M')
     body_text, footnote2 = extract_body(body)
     footnote = footnote1 + footnote2
+
+    # check body title is not 'The' only
+    if title_text == 'The':
+        title_text = 'N/A'
+        body_text = 'The' + body_text
     
     # Add into result list
     result = [year, council, session, agenda_item, agenda_detail, countries, title_number, title_text, body_text, date, footnote]
