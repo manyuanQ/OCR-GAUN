@@ -4,10 +4,11 @@
 
 ### Completed tasks:
 
-- All countries 1994-1997 files are extracted and uploaded to csv folder
+- Countries 1994-1997 files before Turkmenistan are extracted and uploaded to csv folder
 
 ### Questions and Plans:
 
+- Complete extracting task 1994-1997 for rest of the countries.
 - Starting from the middle of 1998, the format underwent significant changes, including changes in font size, position, and capitalization.
   - The date cannot be extracted during the OCR process.
   - Agenda details are no longer entirely in uppercase, making it difficult to separate them with footnotes.
