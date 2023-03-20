@@ -310,5 +310,5 @@ def classify_text_to_column(text):
     
     # Add into result list
     result = [year, council, session, agenda_item, agenda_detail, countries, title_number, title_text, body_text, date, footnote]
-    
-    return result
+    update_result = [remove_empty(_) for _ in result]
+    return update_result
