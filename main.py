@@ -1,8 +1,9 @@
 # import packages
 import os
 import pandas as pd
-import extract_column as ec
-import collections
+import text_extraction as te
+import text_classificatin as tc
+
 
 # Path to the folder containing the PDF files
 pdf_folder = './Dataset'
@@ -48,8 +49,8 @@ for country_folder in os.listdir(pdf_folder):
         print(pdf_path)
 
         # try:
-        pdf_text = ec.extract_text_from_pdf(pdf_path)
-        text_columns = ec.classify_text_to_column(pdf_text)
+        pdf_text = te.extract_text_from_pdf(pdf_path)
+        text_columns = tc.classify_text_to_column(pdf_text)
         row = text_columns[:-1] + [pdf_file[:-4], country_folder] + text_columns[-1:] #add column K and L
         
         # check if year was extracted correctlys
