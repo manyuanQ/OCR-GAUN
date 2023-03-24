@@ -43,8 +43,13 @@ def remove_empty(text):
     return cleaned_text if cleaned_text else 'N/A'
     
 
-council_pattern1 = r"(?<=session).*?(?=Agenda)"
-council_pattern2 = r'([A-Z][A-Za-z]+\s)+(COUNCIL|Council)'
+
+# read council list from text file and store in a list
+with open('council_list.txt', 'r') as f:
+    council_list = [line.strip() for line in f]
+
+# create council/commitee pattern based on council list and ignore case
+council_pattern = re.compile(r"('|'.join(council_list))", re.IGNORECASE)
 
 # Extract council/committee name (B)
 def extract_council(text):
@@ -57,24 +62,15 @@ def extract_council(text):
     Returns:
         str: The extracted council or committee name, or 'N/A' if not found.
     """
-    match1 = re.search(council_pattern1, text, re.DOTALL)
-    match2 = re.search(council_pattern2, text, re.DOTALL)
+    council_match = council_pattern.search(text)
     council = 'N/A'
     
-    # Handle the council after session
-    if match1:
-        council = match1.group(0).strip()
-    
-    # Handle the council before session
-    if match2:
-        council = match2.group(0).strip()
-    
-    if 'Economic and Social' in text:
-        council = 'Economic and Social Council'
-    
-    if council == 'N/A':
+    if council_match:
+        council = council_match.group(0).strip()
+    # handle cases where council name is not found
+    else:
         print("Council Name not found")
-    
+        
     return remove_empty(council)
 
 
