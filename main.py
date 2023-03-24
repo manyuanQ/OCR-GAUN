@@ -2,7 +2,7 @@
 import os
 import pandas as pd
 import text_extraction as te
-import text_classificatin as tc
+import text_classification as tc
 
 
 # Path to the folder containing the PDF files
