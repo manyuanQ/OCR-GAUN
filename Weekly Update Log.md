@@ -1,11 +1,18 @@
 # Weekly Update Log
 
-## Week of 03/20-
+## Week of 03/20- 03/25
 
 ### Completed tasks:
 
 - Uploaded rest of the files to the csv folders
 - Conducted a simple analysis about the invalid rate of files from 1994 to 1997. The average rate is 2.73%. Only 10 of 80 countries's rates are above 5%.
+- Optimized functions and added docstrings
+
+### Questions and Plans:
+
+- How to handle the format that doesn't have agendas.... at all, how to decide the start of cocountries
+- Fix all template in Russian Federation
+- Re-run the countries with higher than 5% rate
 
 ## Week of 03/12-03/19
 
