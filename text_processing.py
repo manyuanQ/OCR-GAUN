@@ -47,12 +47,10 @@ def remove_empty(text):
 # read council list from text file and store in a list
 with open('council_list.txt', 'r') as f:
     council_list = [line.strip() for line in f]
-
 # create council/commitee pattern based on council list and ignore case
 council_pattern = re.compile(r"('|'.join(council_list))", re.IGNORECASE)
-#council_pattern = re.compile(r"\b(" + "|".join(re.escape(c) for c in council_list) + r")\b", re.IGNORECASE)
-
-
+# create special council/commitee pattern
+special_council_pattern = re.compile(r'SPECIAL POLITICAL AND DECOLONIZATION COMMITTEE \(FOURTH COMMITTEE\)', re.IGNORECASE)
 # Extract council/committee name (B)
 def extract_council(text):
     """
@@ -69,11 +67,16 @@ def extract_council(text):
     text = re.sub(r'\s+', ' ', text)
     #print(text)
     council_match = council_pattern.search(text)
-    council = 'N/A'
+    special_council_match = special_council_pattern.search(text)
+    #council = 'N/A'
     
     if council_match:
+        #print(council_match)
         council = council_match.group(0).strip()
+        #print(council)
     # handle cases where council name is not found
+    elif special_council_match:
+        council = special_council_match.group(0).strip()
     else:
         print("Council Name not found")
         council = 'General Assembly'
