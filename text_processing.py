@@ -22,7 +22,7 @@ def extract_date(text):
         formatted_date = date_obj.strftime('%m/%d/%Y') #column J
         year = formatted_date[-4:] #column A
     else:
-        year = date = 'N/A'
+        year = formatted_date = 'N/A'
         print("No date found")
     return year, formatted_date
 
@@ -47,8 +47,11 @@ def remove_empty(text):
 # read council list from text file and store in a list
 with open('council_list.txt', 'r') as f:
     council_list = [line.strip() for line in f]
+
+#print('|'.join(council_list))
+council_names = '|'.join(council_list)
 # create council/commitee pattern based on council list and ignore case
-council_pattern = re.compile(r"('|'.join(council_list))", re.IGNORECASE)
+council_pattern = re.compile(fr"{council_names}", re.IGNORECASE)
 # create special council/commitee pattern
 special_council_pattern = re.compile(r'SPECIAL POLITICAL AND DECOLONIZATION COMMITTEE \(FOURTH COMMITTEE\)', re.IGNORECASE)
 # Extract council/committee name (B)
@@ -66,6 +69,7 @@ def extract_council(text):
     # Replace all whitespace characters with a single space
     text = re.sub(r'\s+', ' ', text)
     #print(text)
+    #print(council_pattern)
     council_match = council_pattern.search(text)
     special_council_match = special_council_pattern.search(text)
     #council = 'N/A'
@@ -182,30 +186,33 @@ def extract_agenda_countries(text):
     countries = 'N/A'
     footnote = 'N/A'
     agenda_detail = 'N/A'
-    if start_index != 0:
-        match3 = re.search(draft_pattern, text[start_index:], re.DOTALL)
-        if match3:
-            end_index = start_index + match3.start()
-            content = text[start_index:end_index]
-            parts = content.split("\n\n")
-            parts = [s for s in parts if s != '']
-            if len(parts) == 1:
-                parts = content.split("\n")
-            parts = [s for s in parts if s != '']
-            agenda_detail = parts[0]
-            remain_parts = parts[1:]
-            for i in range(1, len(parts)):
-                if parts[i].isupper():
-                    agenda_detail += parts[i]
-                else:
-                    remain_parts = parts[i:]
-                    break
-            countries, footnote = helper_extract_countries(remain_parts)
-        else:
-            print('Agenda match3 error')
-            countries = 'N/A'
-            footnote = 'N/A'
-            agenda_detail = 'N/A'
+    match3 = re.search(draft_pattern, text[start_index:], re.DOTALL)
+    if match3:
+        end_index = start_index + match3.start()
+        content = text[start_index:end_index]
+        parts = content.split("\n\n")
+        parts = [s for s in parts if s != '']
+        if len(parts) == 1:
+            parts = content.split("\n")
+        parts = [s for s in parts if s != '']
+        agenda_detail = parts[0]
+        remain_parts = parts[1:]
+        for i in range(1, len(parts)):
+            if parts[i].isupper():
+                agenda_detail += parts[i]
+            else:
+                remain_parts = parts[i:]
+                break
+        countries, footnote = helper_extract_countries(remain_parts)
+    else:
+        print('Agenda match3 error')
+        countries = 'N/A'
+        footnote = 'N/A'
+        agenda_detail = 'N/A'
+
+    #print(agenda_detail)
+    if 'UNITED\nNATIONS S' in agenda_detail:
+        agenda_detail = 'N/A'
 
     return agenda_item, agenda_detail, countries, footnote
 
