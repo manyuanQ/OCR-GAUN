@@ -50,6 +50,8 @@ with open('council_list.txt', 'r') as f:
 
 # create council/commitee pattern based on council list and ignore case
 council_pattern = re.compile(r"('|'.join(council_list))", re.IGNORECASE)
+#council_pattern = re.compile(r"\b(" + "|".join(re.escape(c) for c in council_list) + r")\b", re.IGNORECASE)
+
 
 # Extract council/committee name (B)
 def extract_council(text):
@@ -62,6 +64,10 @@ def extract_council(text):
     Returns:
         str: The extracted council or committee name, or 'N/A' if not found.
     """
+    #print(text)
+    # Replace all whitespace characters with a single space
+    text = re.sub(r'\s+', ' ', text)
+    #print(text)
     council_match = council_pattern.search(text)
     council = 'N/A'
     
@@ -70,8 +76,9 @@ def extract_council(text):
     # handle cases where council name is not found
     else:
         print("Council Name not found")
+        council = 'General Assembly'
         
-    return remove_empty(council)
+    return council
 
 
 session_pattern = r'(?P<session>[\w-]+\s*session)'
@@ -93,7 +100,7 @@ def extract_session(text):
     else:
         session = 'N/A'
         print("Session information not found.")
-    return remove_empty(session)
+    return session
 
 
 country_pattern = r'^[A-Za-z]+(, [A-Za-z]+)*( and [A-Za-z]+)?$'
@@ -197,7 +204,7 @@ def extract_agenda_countries(text):
             footnote = 'N/A'
             agenda_detail = 'N/A'
 
-    return agenda_item, remove_empty(agenda_detail), remove_empty(countries), footnote
+    return agenda_item, agenda_detail, countries, footnote
 
 
 def split_text(text):
@@ -220,7 +227,9 @@ def split_text(text):
     return part1_text, part2_text
 
 
-text_head_pattern = r'(The General Assembly,|The Commission on Human Rights,|The Human Rights Council |The Economic and Social Council,|1\.)'
+#text_head_pattern = r'(The General Assembly,|The Commission on Human Rights,|The Human Rights Council |The Economic and Social Council,|1\.)'
+text_head_pattern = r'(The ' + '|The '.join(council_list) + r',|1\.|The General Assembly)'
+
 number_title_pattern = r'^\s*(\d{4})?/?\W*(.*)'
 
 def extract_body_title(text):
@@ -234,7 +243,8 @@ def extract_body_title(text):
         tuple: A tuple containing body title number (str), body title (str), and body text (str).
     """
     title_body_text = re.split(text_head_pattern, text)
-    body = ' '.join(title_body_text[1:])
+    #print(title_body_text)
+    body = ' '.join([text for text in title_body_text[1:] if text is not None])
     title_text = title_body_text[0]
     title_text = title_text.replace('\n', ' ')
 
@@ -261,7 +271,7 @@ def extract_body_title(text):
     if len(title.split('/')) == 3:
         title = 'N/A'
 
-    return remove_empty(title_number), title, body
+    return title_number, title, body
 
 footnote_pattern = r'^(\*|\d(?![./])|\d{1}/)\s.*'
 
