@@ -1,5 +1,21 @@
 # Weekly Update Log
 
+## Week of 03/27 - 04/02
+
+### Completed tasks:
+
+- Re-clarified the extraction rule for Council
+- Fixed Security Council pattern
+- Processed all files in Russian Federation correctly
+- Decreased the average invalid rate from 2.7% to 1.67%
+
+### Questions and Plans:
+
+- Fix the error in split function
+- Add a new pattern for Addendum documents
+- Convert All uppercase format into title format for Agenda detail
+- Re-run the 1994-1997 files
+
 ## Week of 03/20- 03/25
 
 ### Completed tasks:

@@ -1,6 +1,9 @@
 First Committee 
 Disarmament and International Security Committee
 Second Committee 
+Economic and Social Council
+Economic and Social
+Security Council 
 Economic and Financial Committee
 Third Committee 
 Social, Humanitarian and Cultural Committee
@@ -8,6 +11,7 @@ SPECIAL POLITICAL AND DECOLONIZATION COMMITTEE (FOURTH COMMITTEE)
 Fourth Committee 
 Special Political and Decolonization Committee
 Fifth Committee 
+Trusteeship Council
 Administrative and Budgetary Committee
 Sixth Committee 
 Legal Committee
@@ -24,9 +28,8 @@ Framework Convention on Climate Change Conference of the Parties
 Conference on Trade and Development 
 Environment Programme Governing Council
 Human Rights Council 
+Commission on Human Rights
 Permanent Forum on Indigenous Issues
-Economic and Social Council 
-Security Council 
 Ad Hoc Committee on the Appointment of the Secretary-General
 Ad Hoc Committee on the Indian Ocean
 Ad Hoc Committee on the Pacific
@@ -65,4 +68,3 @@ Group of 77
 Group of 77 and China
 Group of Latin American and Caribbean States 
 Group of States
-Trusteeship Council

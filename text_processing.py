@@ -48,12 +48,10 @@ def remove_empty(text):
 with open('council_list.txt', 'r') as f:
     council_list = [line.strip() for line in f]
 
-#print('|'.join(council_list))
 council_names = '|'.join(council_list)
 # create council/commitee pattern based on council list and ignore case
 council_pattern = re.compile(fr"{council_names}", re.IGNORECASE)
-# create special council/commitee pattern
-special_council_pattern = re.compile(r'SPECIAL POLITICAL AND DECOLONIZATION COMMITTEE \(FOURTH COMMITTEE\)', re.IGNORECASE)
+general_assembly_pattern = re.compile(r'General Assembly', re.IGNORECASE)
 # Extract council/committee name (B)
 def extract_council(text):
     """
@@ -65,27 +63,22 @@ def extract_council(text):
     Returns:
         str: The extracted council or committee name, or 'N/A' if not found.
     """
-    #print(text)
     # Replace all whitespace characters with a single space
     text = re.sub(r'\s+', ' ', text)
-    #print(text)
-    #print(council_pattern)
     council_match = council_pattern.search(text)
-    special_council_match = special_council_pattern.search(text)
-    #council = 'N/A'
-    
+    general_assembly_match = general_assembly_pattern.search(text)
+    council = 'N/A'
     if council_match:
-        #print(council_match)
         council = council_match.group(0).strip()
-        #print(council)
     # handle cases where council name is not found
-    elif special_council_match:
-        council = special_council_match.group(0).strip()
+    elif general_assembly_match:
+        council = 'General Assembly'
     else:
         print("Council Name not found")
-        council = 'General Assembly'
-        
-    return council
+        council = 'N/A'
+    if council == 'Economic and Social':
+        council = 'Economic and Social Council'
+    return council.title()
 
 
 session_pattern = r'(?P<session>[\w-]+\s*session)'
@@ -150,6 +143,7 @@ agenda_pattern = r'Agenda item (\d+)(?: \((\w+)\))?(?:\n\n)?'
 agendas_pattern = r'Agenda items (\d+ \(\w+\)? and \d+)'
 sp_agenda_pattern = r'Item (\d+ ?)(?: \((\w+)\) ?)?of the provisional agenda'
 draft_pattern = r':? *([\w ]*|[\n]*)? ?draft'
+#case_sensitive_pattern = re.compile(pattern)
 
 def extract_agenda_countries(text):
     """
@@ -228,7 +222,7 @@ def split_text(text):
         tuple: A tuple containing the two parts of the split text.
     """
     # Delete extracted text
-    split_text = re.split(draft_pattern, text, flags=re.IGNORECASE)
+    split_text = re.split(draft_pattern, text)
     
     part1_text = split_text[0]
     part2_text = split_text[2:]
@@ -238,7 +232,7 @@ def split_text(text):
 
 
 #text_head_pattern = r'(The General Assembly,|The Commission on Human Rights,|The Human Rights Council |The Economic and Social Council,|1\.)'
-text_head_pattern = r'(The ' + '|The '.join(council_list) + r',|1\.|The General Assembly)'
+text_head_pattern = r'(The ' + '|The '.join(council_list) + r',|1\.|The General Assembly|Add the following|The General Assembl)'
 
 number_title_pattern = r'^\s*(\d{4})?/?\W*(.*)'
 

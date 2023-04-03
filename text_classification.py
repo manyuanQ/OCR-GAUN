@@ -32,7 +32,6 @@ def classify_text_to_column(text):
 
     # Split based on : draft, which is the end of countries
     part1_text, part2_text = split_text(text)
-    
     # Get year(A) and date(J)
     #print('A,J')
     year, date = extract_date(part1_text)
