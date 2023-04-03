@@ -232,7 +232,7 @@ def split_text(text):
 
 
 #text_head_pattern = r'(The General Assembly,|The Commission on Human Rights,|The Human Rights Council |The Economic and Social Council,|1\.)'
-text_head_pattern = r'(The ' + '|The '.join(council_list) + r',|1\.|The General Assembly|Add the following|The General Assembl)'
+text_head_pattern = r'(The ' + '|The '.join(council_list) + r',|1\.|The General Assembly|Add the following|The General Assembl|General Assembly)'
 
 number_title_pattern = r'^\s*(\d{4})?/?\W*(.*)'
 

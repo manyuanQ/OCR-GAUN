@@ -14,7 +14,7 @@ column_list = ['year', 'Council', 'Session', 'Agenda item', 'Agenda detail', 'co
                'body title number',	'body title detail', 'body text', 'date', 'file', 'filecountry', 'footnote', 'scanned']
 
 # record countries
-visited_countries = ['Afghanistan', 'Albania', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Barbados', 'Benin', 'Bhutan']
+visited_countries = []#'Afghanistan', 'Albania', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Barbados', 'Benin', 'Bhutan']
 # Loop through each folder and PDF file and extract text
 for country_folder in os.listdir(pdf_folder):
     # check if the country is unvisited
