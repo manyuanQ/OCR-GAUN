@@ -1,8 +1,8 @@
 # import packages
 import os
 import pandas as pd
-import text_extraction as te
-import text_classification as tc
+import ocr_extraction as oe
+import text2column as tc
 
 
 # Path to the folder containing the PDF files
@@ -13,12 +13,15 @@ csv_folder = './csv_folder'
 column_list = ['year', 'Council', 'Session', 'Agenda item', 'Agenda detail', 'cosponsored countries', 
                'body title number',	'body title detail', 'body text', 'date', 'file', 'filecountry', 'footnote', 'scanned']
 
-# record countries
-visited_countries = []#'Afghanistan', 'Albania', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Barbados', 'Benin', 'Bhutan']
+
+# get input country name
+input_country = input("Start to processing files from Country: ")
+
 # Loop through each folder and PDF file and extract text
+
 for country_folder in os.listdir(pdf_folder):
-    # check if the country is unvisited
-    if country_folder in visited_countries:
+    # check if the country starts with the input country name
+    if country_folder < input_country or country_folder > input_country + 'zzz':
         continue
     print('---------------' + country_folder + '---------------' )
     if not os.path.isdir(os.path.join(pdf_folder, country_folder)):
@@ -27,7 +30,6 @@ for country_folder in os.listdir(pdf_folder):
     rows = []
     count = 0
     # Loop through each file 
-    #csv_year = 1994
    
     for pdf_file in os.listdir(os.path.join(pdf_folder, country_folder)):
         if not pdf_file.endswith('.pdf'):
@@ -49,7 +51,7 @@ for country_folder in os.listdir(pdf_folder):
         print(pdf_path)
 
         # try:
-        pdf_text = te.extract_text_from_pdf(pdf_path)
+        pdf_text = oe.extract_text_from_pdf(pdf_path)
         text_columns = tc.classify_text_to_column(pdf_text)
         row = text_columns[:-1] + [pdf_file[:-4], country_folder] + text_columns[-1:] #add column K and L
         
@@ -71,6 +73,6 @@ for country_folder in os.listdir(pdf_folder):
     # Write the rows to the CSV file
     # df = pd.DataFrame(rows, columns = column_list)
     # df.to_csv(csv_path, index = False)  
-    visited_countries.append(country_folder)
+    # visited_countries.append(country_folder)
     print('---------------' + country_folder + '---------------' )
 

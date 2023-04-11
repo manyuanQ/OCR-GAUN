@@ -1,4 +1,4 @@
-from text_processing import (
+from parse_text import (
     extract_date, extract_council, extract_session,
     extract_agenda_countries, split_text, extract_body_title,
     extract_body, remove_empty

@@ -45,7 +45,7 @@ def remove_empty(text):
 
 
 # read council list from text file and store in a list
-with open('council_list.txt', 'r') as f:
+with open('.\helper_data\council_list.txt', 'r') as f:
     council_list = [line.strip() for line in f]
 
 council_names = '|'.join(council_list)
