@@ -1,5 +1,17 @@
 # Weekly Update Log
 
+## Week of 04/03 - 04/07
+
+### Completed tasks:
+
+- Re-ran the 1994-1997 files
+- Updated the output and council frequency CSV files
+- Recalculated the invalid rate, decreased from 1.67% to 0.8%
+
+### Questions and Plans:
+
+- Begin processing the 1998 file using two DPI settings to handle content with different font sizes.
+
 ## Week of 03/27 - 04/02
 
 ### Completed tasks:
