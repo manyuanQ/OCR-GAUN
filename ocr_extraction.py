@@ -14,12 +14,12 @@ def extract_text_from_pdf(pdf_path, dpi_value):
         org_text (str): Extracted text from the PDF file.
     """
     # Convert the PDF to a list of PIL Image objects
-    images = convert_from_path(pdf_path)
+    images = convert_from_path(pdf_path, dpi = dpi_value)
     text_list = []
     # Loop through each page of the PDF and extract text using Tesseract
     for image in images:
         #print('image')
-        raw_text = pytesseract.image_to_string(image, lang='eng', dpi = dpi_value)
+        raw_text = pytesseract.image_to_string(image, lang='eng')
         text_list.append(raw_text)
     # Combine text from all pages into a single string
     org_text = '\n'.join(text_list)

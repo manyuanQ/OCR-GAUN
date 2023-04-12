@@ -23,7 +23,7 @@ def extract_date(text):
         year = formatted_date[-4:] #column A
     else:
         year = formatted_date = 'N/A'
-        print("No date found")
+        #print("No date found")
     return year, formatted_date
 
 

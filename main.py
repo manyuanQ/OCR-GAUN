@@ -1,8 +1,6 @@
 # import packages
 import os
 import pandas as pd
-import ocr_extraction as oe
-import text2column as tc
 import process as pB
 
 
@@ -14,9 +12,8 @@ csv_folder = './csv_folder'
 column_list = ['year', 'Council', 'Session', 'Agenda item', 'Agenda detail', 'cosponsored countries', 
                'body title number',	'body title detail', 'body text', 'date', 'file', 'filecountry', 'footnote', 'scanned']
 
-
 # get input country name
-input_country = input("Start to processing files from Country: ")
+input_country = input("Start to processing files from Country: ") or "Afghanistan"
 
 # Loop through each folder and PDF file and extract text
 for country_folder in os.listdir(pdf_folder):
@@ -39,19 +36,19 @@ for country_folder in os.listdir(pdf_folder):
         year = int(pdf_file.split('_')[0])
 
         # skip files before 1994 for now
-        if year < 1994:
+        if year < 1998:
             continue
 
-        if year == 1998:
+        if year == 1999:
             df = pd.DataFrame(rows, columns = column_list)
-            csv_path = os.path.join(csv_folder, f"{country_folder}_1994-{year-1}.csv")
+            csv_path = os.path.join(csv_folder, f"{country_folder}_1998.csv")
             df.to_csv(csv_path, index = False) 
             break
 
         pdf_path = os.path.join(pdf_folder, country_folder, pdf_file).replace('\\', '/')
         print(pdf_path)
 
-        if year >= 1994 and year <1998:
+        if year >= 1994 and year < 1998:
             row = pB.process9497(pdf_path, pdf_file, country_folder)
         else:
             row = pB.process98(pdf_path, pdf_file, country_folder)
@@ -61,7 +58,7 @@ for country_folder in os.listdir(pdf_folder):
             row[0] = year
         
         # scanned (N), cannot know 
-        if int(year) > 1990:
+        if int(year) > 1994:
             scanned = 'yes'
         else:
             scanned = 'no'

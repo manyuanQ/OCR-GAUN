@@ -15,7 +15,7 @@ def get_date_new(text):
         str: The date in the format of YYYY-MM-DD.
     """
     # Split based on : draft, which is the end of countries
-    part1_text, part2_text = split_text(text)
+    part1_text, _ = split_text(text)
     # Get year(A) and date(J)
     year, date = extract_date(part1_text)
     return year, date
