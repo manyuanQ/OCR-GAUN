@@ -4,8 +4,24 @@ from parse_text import (
     extract_body, remove_empty
 )
 
+def get_date_new(text):
+    """
+    Get the date from the text.
+    
+    Args:
+        text (str): The input text to be classified.
+        
+    Returns:
+        str: The date in the format of YYYY-MM-DD.
+    """
+    # Split based on : draft, which is the end of countries
+    part1_text, part2_text = split_text(text)
+    # Get year(A) and date(J)
+    year, date = extract_date(part1_text)
+    return year, date
+
 # Function to classify text into column A to N
-def classify_text_to_column(text):
+def text_to_column(text):
     """
     Classify the given text into columns A to N based on the extracted information.
     

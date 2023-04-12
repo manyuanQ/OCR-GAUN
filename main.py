@@ -3,6 +3,7 @@ import os
 import pandas as pd
 import ocr_extraction as oe
 import text2column as tc
+import process as pB
 
 
 # Path to the folder containing the PDF files
@@ -18,27 +19,27 @@ column_list = ['year', 'Council', 'Session', 'Agenda item', 'Agenda detail', 'co
 input_country = input("Start to processing files from Country: ")
 
 # Loop through each folder and PDF file and extract text
-
 for country_folder in os.listdir(pdf_folder):
     # check if the country starts with the input country name
     if country_folder < input_country or country_folder > input_country + 'zzz':
         continue
+
     print('---------------' + country_folder + '---------------' )
     if not os.path.isdir(os.path.join(pdf_folder, country_folder)):
         continue
     
     rows = []
-    count = 0
     # Loop through each file 
-   
     for pdf_file in os.listdir(os.path.join(pdf_folder, country_folder)):
+        # check if the file is pdf
         if not pdf_file.endswith('.pdf'):
             continue
+
         # check if this file is old-version
         year = int(pdf_file.split('_')[0])
 
-        #nfile = int(pdf_file[5:-4])
-        if year < 1994 or year > 1998:
+        # skip files before 1994 for now
+        if year < 1994:
             continue
 
         if year == 1998:
@@ -50,11 +51,11 @@ for country_folder in os.listdir(pdf_folder):
         pdf_path = os.path.join(pdf_folder, country_folder, pdf_file).replace('\\', '/')
         print(pdf_path)
 
-        # try:
-        pdf_text = oe.extract_text_from_pdf(pdf_path)
-        text_columns = tc.classify_text_to_column(pdf_text)
-        row = text_columns[:-1] + [pdf_file[:-4], country_folder] + text_columns[-1:] #add column K and L
-        
+        if year >= 1994 and year <1998:
+            row = pB.process9497(pdf_path, pdf_file, country_folder)
+        else:
+            row = pB.process98(pdf_path, pdf_file, country_folder)
+
         # check if year was extracted correctlys
         if row[0] != year:
             row[0] = year
