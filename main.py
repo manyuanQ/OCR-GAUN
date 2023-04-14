@@ -1,5 +1,6 @@
 # import packages
 import os
+import time
 import pandas as pd
 import process as pB
 
@@ -20,6 +21,8 @@ for country_folder in os.listdir(pdf_folder):
     # check if the country starts with the input country name
     if country_folder < input_country or country_folder > input_country + 'zzz':
         continue
+    # record the time to process each country
+    times = []
 
     print('---------------' + country_folder + '---------------' )
     if not os.path.isdir(os.path.join(pdf_folder, country_folder)):
@@ -28,6 +31,8 @@ for country_folder in os.listdir(pdf_folder):
     rows = []
     # Loop through each file 
     for pdf_file in os.listdir(os.path.join(pdf_folder, country_folder)):
+        # calculate the time to process each file
+        start_time = time.time()
         # check if the file is pdf
         if not pdf_file.endswith('.pdf'):
             continue
@@ -65,12 +70,11 @@ for country_folder in os.listdir(pdf_folder):
         row.append(scanned)
 
         rows.append(row)
-        # except:
-        #     print(f"Error extracting text from {pdf_path}")
-        #     continue
-    # Write the rows to the CSV file
-    # df = pd.DataFrame(rows, columns = column_list)
-    # df.to_csv(csv_path, index = False)  
-    # visited_countries.append(country_folder)
+        # print the time to process each file in seconds, celling to 2 decimal places
+        times.append(time.time() - start_time)
+        print("--- %s seconds ---" % round(time.time() - start_time, 2))
+        
+    # print the average time to process each file in seconds, celling to 2 decimal places
+    print("--- %s seconds ---" % round(sum(times)/len(times), 2))
     print('---------------' + country_folder + '---------------' )
 
