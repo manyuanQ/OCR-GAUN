@@ -17,6 +17,11 @@ def extract_date(text):
     date_match = re.search(date_pattern, text)
     if date_match:
         date = date_match.group(0)
+        # check if the date is in the correct range
+        dd = int(date.split()[0])
+        if dd > 31:
+            return date.split()[-1], 'N/A'
+        # convert to datetime object
         date_obj = datetime.strptime(date, '%d %B %Y')
         # change to mm/dd/yyyy format
         formatted_date = date_obj.strftime('%m/%d/%Y') #column J

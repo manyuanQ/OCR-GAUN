@@ -30,10 +30,10 @@ def process98(pdf_path, pdf_file, country_folder):
         attempts += 1
         # add 1 to higher_dpi every 3 attempts
         if attempts % 5 == 0:
-            higher_dpi += 1
+            higher_dpi += 2
 
     if attempts < 25 and attempts > 0:
-        print(f"Get date in the {attempts}th attempts")
+        print(f"Get date in the {attempts}th attempt")
     elif attempts == 25:
         print(f"Get date failed with {attempts} attempts")
     row = text_columns[:-1] + [pdf_file[:-4], country_folder] + text_columns[-1:] #add column K and L

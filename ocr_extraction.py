@@ -19,7 +19,7 @@ def extract_text_from_pdf(pdf_path, dpi_value):
     # Loop through each page of the PDF and extract text using Tesseract
     for image in images:
         #print('image')
-        raw_text = pytesseract.image_to_string(image, lang='eng')
+        raw_text = pytesseract.image_to_string(image)
         text_list.append(raw_text)
     # Combine text from all pages into a single string
     org_text = '\n'.join(text_list)
