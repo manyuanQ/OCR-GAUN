@@ -1,5 +1,19 @@
 # Weekly Update Log
 
+## Week of 04/12 - 04/15
+
+### Completed tasks:
+
+- Modified the OCR function to handle the new format with different DPI.
+- Modified the main.py file to handle files before and after 1998 simultaneously.
+- Completed extraction example on Afghanistan's 1998-1999 files.
+
+### Questions and Plans:
+
+- Some files take more than 10 minutes to obtain the date. Need to explore better strategies to improve the processing time.
+- Consider adjusting the DPI settings for better OCR results.
+- Confirm the total attempts for OCR text extraction in order to obtain the correct date consistently.
+
 ## Week of 04/03 - 04/07
 
 ### Completed tasks:
