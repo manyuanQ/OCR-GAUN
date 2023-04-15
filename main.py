@@ -75,6 +75,7 @@ for country_folder in os.listdir(pdf_folder):
         print("--- %s seconds ---" % round(time.time() - start_time, 2))
         
     # print the average time to process each file in seconds, celling to 2 decimal places
-    print("--- %s seconds ---" % round(sum(times)/len(times), 2))
+    print("Total files: " + str(len(times)) + "takes: " + str(sum(times)) + " seconds")
+    print("--- Average %s seconds ---" % round(sum(times)/len(times), 2))
     print('---------------' + country_folder + '---------------' )
 
