@@ -19,7 +19,7 @@ input_country = input("Start to processing files from Country: ") or "Afghanista
 # Loop through each folder and PDF file and extract text
 for country_folder in os.listdir(pdf_folder):
     # check if the country starts with the input country name
-    if country_folder < input_country or country_folder > input_country + 'zzz':
+    if country_folder < input_country:
         continue
     # record the time to process each country
     times = []
