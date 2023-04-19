@@ -21,13 +21,20 @@ def extract_date(text):
         dd = int(date.split()[0])
         if dd > 31:
             return date.split()[-1], 'N/A'
-        # convert to datetime object
-        date_obj = datetime.strptime(date, '%d %B %Y')
-        # change to mm/dd/yyyy format
-        formatted_date = date_obj.strftime('%m/%d/%Y') #column J
-        year = formatted_date[-4:] #column A
+        
+        try:
+            date_obj = datetime.strptime(date, '%d %B %Y')
+        except ValueError:
+            date_obj = None
+        
+        if date_obj: 
+            # change to mm/dd/yyyy format
+            formatted_date = date_obj.strftime('%m/%d/%Y') #column J
+            year = formatted_date[-4:] #column A
+        else:
+            formatted_date = year = 'N/A'  
     else:
-        year = formatted_date = 'N/A'
+        formatted_date = year = 'N/A'
         #print("No date found")
     return year, formatted_date
 

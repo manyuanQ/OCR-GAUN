@@ -26,13 +26,13 @@ def process98(pdf_path, pdf_file, country_folder):
     # check if date was extracted correctly
     attempts = 0
     while text_columns[-2] == 'N/A' and attempts < 30:
-        pdf_text_new = oe.extract_text_from_pdf(pdf_path, higher_dpi)
+        pdf_text_new = oe.extract_first_page_only(pdf_path, higher_dpi)
         _, date = tc.get_date_new(pdf_text_new)
         text_columns[-2] = date
         attempts += 1
         # add 1 to higher_dpi every 3 attempts
         if attempts % 3 == 0:
-            higher_dpi += 3
+            higher_dpi += 4
 
     if attempts < 30 and attempts > 0:
         print(f"Get date in the {attempts}th attempt")
