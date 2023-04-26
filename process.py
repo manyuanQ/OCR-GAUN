@@ -32,7 +32,7 @@ def process98(pdf_path, pdf_file, country_folder):
         attempts += 1
         # add 1 to higher_dpi every 3 attempts
         if attempts % 3 == 0:
-            higher_dpi += 4
+            higher_dpi += 3
 
     if attempts < 30 and attempts > 0:
         print(f"Get date in the {attempts}th attempt")

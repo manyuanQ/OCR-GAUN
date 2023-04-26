@@ -72,7 +72,7 @@ for country_folder in os.listdir(pdf_folder):
         rows.append(row)
         # print the time to process each file in seconds, celling to 2 decimal places
         times.append(time.time() - start_time)
-        print("--- %s seconds ---" % round(time.time() - start_time, 2))
+        #print("--- %s seconds ---" % round(time.time() - start_time, 2))
         
     # print the average time to process each file in seconds, celling to 2 decimal places
     print("Total files: " + str(len(times)) + " takes: " + str(sum(times)) + " seconds")
